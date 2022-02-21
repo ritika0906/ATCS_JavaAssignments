@@ -1,0 +1,323 @@
+*****************************************************************Employee.java***********************************************************
+
+
+package Week3;
+
+public class Employee {
+
+	private String empname;
+	private int empcode;
+	private String empMailid;
+	private String empadd;
+	private int empPincode;
+	
+	public String getEmpname() {
+		return empname;
+	}
+	public void setEmpname(String empname) {
+		this.empname = empname;
+	}
+	public int getEmpcode() {
+		return empcode;
+	}
+	public void setEmpcode(int empcode) {
+		this.empcode = empcode;
+	}
+	public String getEmpMailid() {
+		return empMailid;
+	}
+	public void setEmpMailid(String empMailid) {
+		this.empMailid = empMailid;
+	}
+	public String getEmpadd() {
+		return empadd;
+	}
+	public void setEmpadd(String empadd) {
+		this.empadd = empadd;
+	}
+	public int getEmpPincode() {
+		return empPincode;
+	}
+	public void setEmpPincode(int empPincode) {
+		this.empPincode = empPincode;
+	}
+	public Employee(String empname, int empcode, String empMailid, String empadd, int empPincode) {
+		super();
+		this.empname = empname;
+		this.empcode = empcode;
+		this.empMailid = empMailid;
+		this.empadd = empadd;
+		this.empPincode = empPincode;
+	}
+	public Employee() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	@Override
+	public String toString() {
+		return "Employee [empname=" + empname + ", empcode=" + empcode + ", empMailid=" + empMailid + ", empadd="
+				+ empadd + ", empPincode=" + empPincode + "]";
+	}
+	
+	
+}
+
+
+**************************************************************ClientProg.java**************************************************************
+
+
+package Week3;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Scanner;
+import java.util.Set;
+
+public class ClientProg {
+
+	public static void main(String[] args) {
+		
+		HashMap<Integer, Employee> employee = new HashMap<Integer, Employee>();
+		
+		int empId = 0;
+		
+		while(true)
+		{
+			System.out.println("Employee management details");
+			
+			System.out.println("1. Add employee details");
+			System.out.println("2. Update employee details");
+			System.out.println("3. get employee details");
+			System.out.println("4. getAll employee details");
+			System.out.println("5. delete employee details");
+			
+			System.out.println("enter choice");
+			
+			Scanner sc = new Scanner(System.in);
+			int choice = sc.nextInt();
+		
+			switch(choice)
+			{
+			case 1:
+				System.out.println("enter empoloyee details");
+				
+				System.out.println("enter emp name");
+				String empname = sc.next();
+				
+				System.out.println("enter emp code");
+				int empcode = sc.nextInt();
+				
+				System.out.println("enter emp mail id");
+				String empMailid = sc.next();
+				
+				System.out.println("enter emp address");
+				String empadd = sc.next();
+				
+				System.out.println("enter emp pincode");
+				int empPincode = sc.nextInt();
+				
+				Employee emp = new Employee(empname, empcode, empMailid, empadd, empPincode);
+				
+				employee.put(++empId, emp);
+				
+				System.out.println("employee details added successfully with id:"+empId);
+				
+				break;
+			
+			case 2:
+				System.out.println("update the employee details");
+				
+				System.out.println("enter id of the employee whose details u want to update");
+				int empId1 = sc.nextInt();
+				
+				System.out.println("enter updated emp name");
+				String empname1 = sc.next();
+				
+				System.out.println("enter updated emp code");
+				int empcode1 = sc.nextInt();
+				
+				System.out.println("enter updated emp mail id");
+				String empMailid1 = sc.next();
+				
+				System.out.println("enter updated emp address");
+				String empadd1 = sc.next();
+				
+				System.out.println("enter updated emp pincode");
+				int empPincode1 = sc.nextInt();
+				
+				Employee emp1 = new Employee(empname1, empcode1, empMailid1, empadd1, empPincode1);
+				
+				employee.put(empId, emp1);
+				
+				System.out.println("employee details updated successfully with id:"+empId);
+				
+				break;
+				
+			case 3:
+				
+				System.out.println("enter id of the employee whose details u wnt to get");
+				int empId2 = sc.nextInt();
+				
+				Employee obj = employee.get(empId2);
+				System.out.println(obj);
+				
+				break;
+			
+			case 4:
+				
+				Set<Entry<Integer, Employee>> result = employee.entrySet();		
+				Iterator<Entry<Integer, Employee>> itr = result.iterator();
+				
+				while(itr.hasNext())
+			    {
+			    	Entry<Integer,Employee> finalResult=itr.next();
+			    		   
+			    	System.out.println(finalResult.getKey()+"  "+finalResult.getValue());
+			    }
+			    
+				break;
+			    
+			case 5:
+				System.out.println("enter id of the employee whose details u want to delete");
+				int empId3 = sc.nextInt();
+				
+				Employee obj1 = employee.remove(empId3);
+				System.out.println("employee details deleted successfully with id:" +empId3);
+				
+				break;
+			
+			default:
+				System.out.println("please enter right choice");
+				
+			}
+		}
+	}
+}
+
+
+*******************************************************************Output*****************************************************************
+
+
+
+Employee management details
+1. Add employee details
+2. Update employee details
+3. get employee details
+4. getAll employee details
+5. delete employee details
+
+enter choice
+1
+enter empoloyee details
+enter emp name
+ritika
+enter emp code
+1503
+enter emp mail id
+ritika@gmail.com
+enter emp address
+jaipur
+enter emp pincode
+302011
+employee details added successfully with id:1
+
+Employee management details
+1. Add employee details
+2. Update employee details
+3. get employee details
+4. getAll employee details
+5. delete employee details
+enter choice
+1
+
+enter empoloyee details
+enter emp name
+radha
+enter emp code
+2018
+enter emp mail id
+radha@gmail.com
+enter emp address
+jaipur
+enter emp pincode
+302102
+employee details added successfully with id:2
+
+Employee management details
+1. Add employee details
+2. Update employee details
+3. get employee details
+4. getAll employee details
+5. delete employee details
+enter choice
+2
+
+update the employee details
+enter id of the employee whose details u want to update
+2
+enter updated emp name
+shyam
+enter updated emp code
+20212
+enter updated emp mail id
+shyam@gmail.com
+enter updated emp address
+sikar
+enter updated emp pincode
+201033
+employee details updated successfully with id:2
+
+Employee management details
+1. Add employee details
+2. Update employee details
+3. get employee details
+4. getAll employee details
+5. delete employee details
+enter choice
+3
+
+enter id of the employee whose details u wnt to get
+1
+Employee [empname=ritika, empcode=1503, empMailid=ritika@gmail.com, empadd=jaipur, empPincode=302011]
+Employee management details
+1. Add employee details
+2. Update employee details
+3. get employee details
+4. getAll employee details
+5. delete employee details
+enter choice
+4
+
+1  Employee [empname=ritika, empcode=1503, empMailid=ritika@gmail.com, empadd=jaipur, empPincode=302011]
+2  Employee [empname=shyam, empcode=20212, empMailid=shyam@gmail.com, empadd=sikar, empPincode=201033]
+Employee management details
+1. Add employee details
+2. Update employee details
+3. get employee details
+4. getAll employee details
+5. delete employee details
+enter choice
+5
+
+enter id of the employee whose details u want to delete
+1
+employee details deleted successfully with id:1
+Employee management details
+1. Add employee details
+2. Update employee details
+3. get employee details
+4. getAll employee details
+5. delete employee details
+enter choice
+4
+
+2  Employee [empname=shyam, empcode=20212, empMailid=shyam@gmail.com, empadd=sikar, empPincode=201033]
+Employee management details
+1. Add employee details
+2. Update employee details
+3. get employee details
+4. getAll employee details
+5. delete employee details
+enter choice
+
