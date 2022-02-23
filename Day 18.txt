@@ -1,0 +1,228 @@
+******************QUESTION 1: Create a table Student add student details modify the all the table columns by using commands.***************
+
+
+1. Creating databse
+create database ritikadatabase;
+CREATE DATABASE
+
+2. Connecting the database
+ritikadb=# \c ritikadatabase;
+You are now connected to database "ritikadatabase" as user "postgres".
+
+3. Create a table
+ritikadatabase=# create table student(stuId int, stuName varchar(20), stuAdd varchar(30));
+CREATE TABLE
+
+4. Describe the table
+ritikadatabase=# \d student;
+                      Table "public.student"
+ Column  |         Type          | Collation | Nullable | Default
+---------+-----------------------+-----------+----------+---------
+ stuid   | integer               |           |          |
+ stuname | character varying(20) |           |          |
+ stuadd  | character varying(30) |           |          |
+
+
+5. insert the values into database
+ritikadatabase=# insert into student values(12, 'ritika', 'sikar');
+INSERT 0 1
+ritikadatabase=# insert into student values(15, 'shyam', 'jaipur');
+INSERT 0 1
+ritikadatabase=# insert into student values(20, 'ridhima', 'udaipur');
+INSERT 0 1
+
+6. view the inserted data into the table
+ritikadatabase=# select * from student;
+ stuid | stuname | stuadd
+-------+---------+---------
+    12 | ritika  | sikar
+    15 | shyam   | jaipur
+    20 | ridhima | udaipur
+(3 rows)
+
+
+7. add one more column to the student table
+ritikadatabase=# alter table student add column stuGrade varchar(10);
+ALTER TABLE
+
+8. describe the table
+ritikadatabase=# \d student;
+                      Table "public.student"
+  Column  |         Type          | Collation | Nullable | Default
+----------+-----------------------+-----------+----------+---------
+ stuid    | integer               |           |          |
+ stuname  | character varying(20) |           |          |
+ stuadd   | character varying(30) |           |          |
+ stugrade | character varying(10) |           |          |
+
+
+9. view the inserted data into the table
+select * from student;
+ stuid | stuname | stuadd  | stugrade
+-------+---------+---------+----------
+    12 | ritika  | sikar   |
+    15 | shyam   | jaipur  |
+    20 | ridhima | udaipur |
+(3 rows)
+
+
+10. add the data into stuGrade column ---> use update column
+ritikadatabase=# update student set stuGrade = 'A' where stuId = 12;
+UPDATE 1
+ritikadatabase=# update student set stuGrade = 'A' where stuId = 15;
+UPDATE 1
+ritikadatabase=# update student set stuGrade = 'B' where stuId = 20;
+UPDATE 1
+
+11. view the table
+ritikadatabase=# select * from student;
+ stuid | stuname | stuadd  | stugrade
+-------+---------+---------+----------
+    12 | ritika  | sikar   | A
+    15 | shyam   | jaipur  | A
+    20 | ridhima | udaipur | B
+(3 rows)
+
+12. delete one column of the table
+ritikadatabase=# delete from student where stuId = 12;
+DELETE 1
+
+13. view the table
+ritikadatabase=# select * from student;
+ stuid | stuname | stuadd  | stugrade
+-------+---------+---------+----------
+    15 | shyam   | jaipur  | A
+    20 | ridhima | udaipur | B
+(2 rows)
+
+
+14. rename the column name of the table
+ritikadatabase=# alter table student rename stuAdd to stuaddress;
+ALTER TABLE
+ritikadatabase=# select * from student;
+ stuid | stuname | stuaddress | stugrade
+-------+---------+------------+----------
+    15 | shyam   | jaipur     | A
+    20 | ridhima | udaipur    | B
+(2 rows)
+
+15. rename the tablename
+ritikadatabase=# alter table student rename to studentdetails;
+ALTER TABLE
+
+ritikadatabase=# \d studentdetails;
+                    Table "public.studentdetails"
+   Column   |         Type          | Collation | Nullable | Default
+------------+-----------------------+-----------+----------+---------
+ stuid      | integer               |           |          |
+ stuname    | character varying(20) |           |          |
+ stuaddress | character varying(30) |           |          |
+ stugrade   | character varying(10) |           |          |
+
+16. change the datatype of the column
+ritikadatabase=# alter table studentdetails alter column stuName type varchar(50);
+ALTER TABLE
+
+ritikadatabase=# \d studentdetails;
+                    Table "public.studentdetails"
+   Column   |         Type          | Collation | Nullable | Default
+------------+-----------------------+-----------+----------+---------
+ stuid      | integer               |           |          |
+ stuname    | character varying(50) |           |          |
+ stuaddress | character varying(30) |           |          |
+ stugrade   | character varying(10) |           |          |
+
+
+17. Truncate the table
+ritikadatabase=# truncate table studentdetails;
+TRUNCATE TABLE
+
+18. view the structure of the table
+ritikadatabase=# \d studentdetails;
+                    Table "public.studentdetails"
+   Column   |         Type          | Collation | Nullable | Default
+------------+-----------------------+-----------+----------+---------
+ stuid      | integer               |           |          |
+ stuname    | character varying(50) |           |          |
+ stuaddress | character varying(30) |           |          |
+ stugrade   | character varying(10) |           |          |
+
+19. view the inserted data of the table
+ritikadatabase=# select * from studentdetails;
+ stuid | stuname | stuaddress | stugrade
+-------+---------+------------+----------
+(0 rows)
+
+
+*****************Question 2: Create a tables Manager and Employee add details of both tables and join by using equijoin.*********************
+
+
+1. create manager table
+ritikadatabase-# create table manager(empid int, empname varchar(20), empjoiningdate date, empdeptno int);
+CREATE TABLE
+
+ritikadatabase=# \d manager;
+                         Table "public.manager"
+     Column     |         Type          | Collation | Nullable | Default
+----------------+-----------------------+-----------+----------+---------
+ empid          | integer               |           |          |
+ empname        | character varying(20) |           |          |
+ empjoiningdate | date                  |           |          |
+ empdeptno      | integer               |           |          |
+
+
+2. Inserting values to the manager table
+ritikadatabase=# insert into manager values(1,'ritika','2022-12-01',10);
+INSERT 0 1
+ritikadatabase=# insert into manager values(2,'ram','2018-10-01',10);
+INSERT 0 1
+ritikadatabase=# insert into manager values(3,'radha','2019-10-01',20);
+INSERT 0 1
+ritikadatabase=# insert into manager values(4,'radhika','2009-10-01',30);
+INSERT 0 1
+
+3. viewing the inserted data into the manager table
+select * from manager;
+ empid | empname | empjoiningdate | empdeptno
+-------+---------+----------------+-----------
+     1 | ritika  | 2022-12-01     |        10
+     2 | ram     | 2018-10-01     |        10
+     3 | radha   | 2019-10-01     |        20
+     4 | radhika | 2009-10-01     |        30
+(4 rows)
+
+4. Create employee table
+ritikadatabase=# create table employee1(empid int, empname varchar(20), empadd varchar(30));
+CREATE TABLE
+
+ritikadatabase=# \d employee1
+                     Table "public.employee1"
+ Column  |         Type          | Collation | Nullable | Default
+---------+-----------------------+-----------+----------+---------
+ empid   | integer               |           |          |
+ empname | character varying(20) |           |          |
+ empadd  | character varying(30) |           |          |
+
+
+5. Inserting data to the employee1 table
+ritikadatabase=# insert into employee1 values (1, 'ridhima','jaipur');
+INSERT 0 1
+ritikadatabase=# insert into employee1 values (5, 'shyam','sikar');
+INSERT 0 1
+
+6. viewing the inserted data into the employee1 table
+ritikadatabase=# select * from employee1;
+ empid | empname | empadd
+-------+---------+--------
+     1 | ridhima | jaipur
+     5 | shyam   | sikar
+(2 rows)
+
+7. Joining manager and employee table using equijoin
+ritikadatabase=# select m.empid, m.empname, m.empjoiningdate, m.empdeptno, e.empadd from manager m, employee1 e where m.empid = e.empid;
+ 
+empid | empname | empjoiningdate | empdeptno | empadd
+-------+---------+----------------+-----------+--------
+     1 | ritika  | 2022-12-01     |        10 | jaipur
+(1 row)
+
