@@ -1,0 +1,154 @@
+JPA Program
+
+  Employee.java
+================
+
+package com.ia.employeecrud;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Employee1 {
+
+	@Id
+	private int empid;
+	private String empname;
+	private String empadd;
+	private int empsal;
+	
+	public int getEmpid() {
+		return empid;
+	}
+	
+	public void setEmpid(int empid) {
+		this.empid = empid;
+	}
+	public String getEmpname() {
+		return empname;
+	}
+	public void setEmpname(String empname) {
+		this.empname = empname;
+	}
+	public String getEmpadd() {
+		return empadd;
+	}
+	public void setEmpadd(String empadd) {
+		this.empadd = empadd;
+	}
+	public int getEmpsal() {
+		return empsal;
+	}
+	public void setEmpsal(int empsal) {
+		this.empsal = empsal;
+	}
+	
+	public Employee1() {
+		// TODO Auto-generated constructor stub
+	}
+	public Employee1(int empid, String empname, String empadd, int empsal) {
+		super();
+		this.empid = empid;
+		this.empname = empname;
+		this.empadd = empadd;
+		this.empsal = empsal;
+	}
+	@Override
+	public String toString() {
+		return "Employee [empid=" + empid + ", empname=" + empname + ", empadd=" + empadd + ", empsal=" + empsal + "]";
+	}
+	
+	
+}
+
+  Test.java
+==============
+
+package com.ia.employeecrud;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+public class Test {
+
+	public static void main(String[] args) {
+		
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory("ritika");
+		EntityManager entity = factory.createEntityManager();
+		
+		//insertion
+//		Employee1 emp = new Employee1(20,"radha","delhi",0000);
+//		entity.getTransaction().begin();
+//	    entity.persist(emp);
+//	    entity.getTransaction().commit();
+//		
+		//fetch
+		Employee1 emp=entity.find(Employee1.class, 10);
+	    System.out.println(emp); 
+	    
+	    //update
+//	    emp.setEmpname("ranu");
+//	    emp.setEmpadd("sikar");
+//       emp.setEmpsal(20000);
+//	     	
+//	    entity.getTransaction().begin();
+//	    entity.merge(emp);
+//	    entity.getTransaction().commit();
+//	    
+	    //delete
+	    entity.getTransaction().begin();
+	    entity.remove(emp);
+	    entity.getTransaction().commit();
+	    
+	}
+}
+
+
+   persistence.xml
+=====================
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+                      http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+  version="2.0">
+  
+	<persistence-unit name="ritika" transaction-type="RESOURCE_LOCAL">
+	
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>com.ia.employeecrud.Employee1</class>
+
+		<properties>
+		<!-- database properties -->
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/ritika" />
+			<property name="javax.persistence.jdbc.user" value="postgres" />
+			<property name="javax.persistence.jdbc.password" value="ritikaSQL" />
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+			
+			<!-- hibernate properties -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="hibernate.hbm2ddl.auto" value="update"/> <!-- create/update  -->
+			<property name="hibernate.show_sql" value="true"/>
+		</properties>
+		
+	</persistence-unit>
+	
+</persistence>
+
+
+  output
+==========
+
+Hibernate: select employee1x0_.empid as empid0_0_, employee1x0_.empadd as empadd0_0_, employee1x0_.empname as empname0_0_, employee1x0_.empsal as empsal0_0_ from Employee1 employee1x0_ where employee1x0_.empid=?
+Employee [empid=10, empname=ranu, empadd=sikar, empsal=20000]
+Hibernate: delete from Employee1 where empid=?
+
+
+ritika=# select * from employee1;
+ empid | empadd | empname | empsal
+-------+--------+---------+--------
+    20 | delhi  | radha   |  40000
+(1 row)
