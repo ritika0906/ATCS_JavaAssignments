@@ -1,4 +1,4 @@
-JPA Program
+***************************************************************************JPA Program****************************************************************************************
 
   Employee.java
 ================
@@ -152,3 +152,165 @@ ritika=# select * from employee1;
 -------+--------+---------+--------
     20 | delhi  | radha   |  40000
 (1 row)
+
+
+***********************************************************************************JPQL Program*********************************************************************************
+
+Student.java
+=============
+
+package com.jpql;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Student1")
+public class Student{
+	@Id
+	private int id;
+	@Column(length=15)
+	private String name;
+	private String add;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getAdd() {
+		return add;
+	}
+	public void setAdd(String add) {
+		this.add = add;
+	}
+	
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
+	public Student(int id, String name, String add) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.add = add;
+	}
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", add=" + add + "]";
+	}
+		
+}
+
+
+Test.java
+===========
+package com.jpql;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
+
+public class Test {
+
+	public static void main(String[] args) {
+		
+		EntityManagerFactory factory=Persistence.createEntityManagerFactory("jpqlex");
+		
+		EntityManager entity= factory.createEntityManager();
+		
+		entity.getTransaction().begin();
+	    
+//	     inserted
+//	     Student e= new Student(100, "ritika", "sikar");
+//          Student e1= new Student(101, "sita","jaipur");
+//	    Student e2= new Student(102, "SATHYA","HYD");
+//	    Student e3= new Student(103, "MAHESH", "delhi");
+//		
+//	        entity.persist(e);
+//		entity.persist(e1);
+//		entity.persist(e2);
+//		entity.persist(e3);
+//		
+                 //fetch the data 
+//		TypedQuery<Student> tq=entity.createQuery("select e from Student e", Student.class);
+//		
+//		List<Student> li=tq.getResultList();
+//				
+//		for(Student s:li) 
+//		{
+//			
+//			System.out.println(s.getId());
+//		    System.out.println(s.getName());
+//			System.out.println(s.getAdd());
+//			
+//		 }
+		//deetion of data
+		Query result = entity.createQuery("delete from  Student where add='sikar'");
+                result.executeUpdate();
+
+		entity.getTransaction().commit();
+		entity.close();
+		factory.close();
+}
+}
+
+persistence.xml
+================
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+                      http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+  version="2.0">
+  
+	<persistence-unit name="jpqlex" transaction-type="RESOURCE_LOCAL">
+	
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>com.jpql.Student</class>
+		
+		<properties>
+		<!-- database properties -->
+		
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/ritika" />
+			<property name="javax.persistence.jdbc.user" value="postgres" />
+			<property name="javax.persistence.jdbc.password" value="ritikaSQL" />
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+			<!-- hibernate properties -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+			<property name="hibernate.hbm2ddl.auto" value="update"/><!-- create/update  -->
+			<property name="hibernate.show_sql" value="true"/>
+		</properties>
+		
+	</persistence-unit>
+	
+</persistence>
+
+
+   OUTPUT
+ ==========
+
+ritika=# select * from student1;
+ id  |  add   |  name
+-----+--------+--------
+ 101 | jaipur | sita
+ 102 | HYD    | SATHYA
+ 103 | delhi  | MAHESH
+(3 rows)
+
+
