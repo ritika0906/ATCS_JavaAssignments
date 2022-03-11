@@ -1,0 +1,274 @@
+*******************************************************************Spring Program using setter injection**********************************************************************
+
+Employee.java
+==============
+
+package com.spring;
+
+public class Employee {
+	
+	private int empid;
+	private String empname;
+	private String empadd;
+	private int empsal;
+  
+  //getters and setters
+	public int getEmpid() {
+		return empid;
+	}
+	public void setEmpid(int empid) {
+		this.empid = empid;
+	}
+	public String getEmpname() {
+		return empname;
+	}
+	public void setEmpname(String empname) {
+		this.empname = empname;
+	}
+	public String getEmpadd() {
+		return empadd;
+	}
+	public void setEmpadd(String empadd) {
+		this.empadd = empadd;
+	}
+	public int getEmpsal() {
+		return empsal;
+	}
+	public void setEmpsal(int empsal) {
+		this.empsal = empsal;
+	}
+	
+  //default constructor
+	public Employee() {
+		// TODO Auto-generated constructor stub
+	}
+	
+  //param constructor
+	public Employee(int empid, String empname, String empadd, int empsal) {
+		super();
+		this.empid = empid;
+		this.empname = empname;
+		this.empadd = empadd;
+		this.empsal = empsal;
+	}
+  
+  //toString
+	@Override
+	public String toString() {
+		return "Employee [empid=" + empid + ", empname=" + empname + ", empadd=" + empadd + ", empsal=" + empsal + "]";
+	}
+
+}
+
+
+Test.java
+=========
+
+package com.spring;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+public class Test {
+
+	public static void main(String[] args) {
+		
+		Resource resouce = new ClassPathResource("springconfig.xml");
+		BeanFactory factory = new XmlBeanFactory(resouce);
+		
+		Employee emp = (Employee) factory.getBean("springex");
+		System.out.println(emp);
+	}
+}
+
+
+springconfig.xml
+================
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<context:annotation-config></context:annotation-config>
+
+<bean class="com.spring.Employee" id="springex">    
+
+<property name="empid" value="100"> </property>
+<property name="empname" value="ritika"> </property>
+<property name="empsal" value="10000"> </property>
+<property name="empadd" value="jaipur"> </property>
+
+</bean>
+
+</beans>
+
+output
+=======
+
+Employee [empid=100, empname=ritika, empadd=jaipur, empsal=10000]
+
+
+************************************************************************Spring Autowiring (using byType)***********************************************************************
+
+Student.java
+=============
+
+package com.springautowiring;
+
+public class Student {
+
+	private int id;
+	private String name;
+	Address address;
+	
+	//getters and setters
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
+	//default constructor
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	//param constructor
+	public Student(int id, String name, Address address) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.address = address;
+	}
+	
+	//toString
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", address=" + address + "]";
+	}
+		
+}
+
+
+Test.java
+==========
+
+package com.springautowiring;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+public class Testclass {
+
+	public static void main(String[] args) {
+		
+		Resource resource = new ClassPathResource("springconfig.xml");
+		BeanFactory factory = new XmlBeanFactory(resource);
+		
+		Student std = (Student) factory.getBean("student");
+		System.out.println(std);
+		
+	}
+}
+
+
+Address.java
+=============
+
+package com.springautowiring;
+
+public class Address {
+
+	private int houseNo;
+	private String city;
+	private String state;
+	
+	public int getHouseNo() {
+		return houseNo;
+	}
+	public void setHouseNo(int houseNo) {
+		this.houseNo = houseNo;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	
+	public Address() {
+		// TODO Auto-generated constructor stub
+	}
+	public Address(int houseNo, String city, String state) {
+		super();
+		this.houseNo = houseNo;
+		this.city = city;
+		this.state = state;
+	}
+	@Override
+	public String toString() {
+		return "Address [houseNo=" + houseNo + ", city=" + city + ", state=" + state + "]";
+	}
+	
+	
+}
+
+
+springconfig.xml
+================
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<beans  xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<context:annotation-config></context:annotation-config>
+	
+<bean class = "com.springautowiring.Student" id = "student" autowire= "byType">
+		
+	<property name="id" value="100"> </property>
+	<property name = "name" value = "ritika"> </property>
+			 
+</bean>
+
+<bean class = "com.springautowiring.Address" id = "add">
+	<property name = "houseNo" value = "1223"> </property>
+	<property name = "city" value = "jaipur"> </property>
+	<property name = "state" value = "Rajasthan"> </property>
+	
+</bean>
+
+</beans>
