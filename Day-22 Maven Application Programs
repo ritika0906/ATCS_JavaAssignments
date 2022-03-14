@@ -1,0 +1,671 @@
+*******************************************************************************Simple Maven Program****************************************************************************
+
+Student.java
+=============
+
+package SpringCoreProgram.com.springcore;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class Student {
+	
+	private int id;
+	private String name;
+	
+	@Autowired
+	Address address;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	@Autowired                                                    //byName autowire
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	//default constructor
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	//param constructor
+	public Student(int id, String name, Address address) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.address = address;
+	}
+
+	//toString() method
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", address=" + address + "]";
+	}	
+}
+
+
+Address.java
+=============
+
+package SpringCoreProgram.com.springcore;
+
+public class Address {
+
+	private int houseNo;
+	private String city;
+	private String state;
+	
+	//getters and setters
+	public int getHouseNo() {
+		return houseNo;
+	}
+	public void setHouseNo(int houseNo) {
+		this.houseNo = houseNo;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	
+	//default constructor
+	public Address() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	//param constructor
+	public Address(int houseNo, String city, String state) {
+		super();
+		this.houseNo = houseNo;
+		this.city = city;
+		this.state = state;
+	}
+	
+	//toString() method
+	@Override
+	public String toString() {
+		return "Address [houseNo=" + houseNo + ", city=" + city + ", state=" + state + "]";
+	}	
+}
+
+Test.java
+==========
+
+package SpringCoreProgram.com.springcore;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Test {
+
+	public static void main(String[] args) {
+
+		ApplicationContext factory = new AnnotationConfigApplicationContext(AppConfig.class);
+		
+		Student std = (Student) factory.getBean("student");
+		System.out.println(std);
+	}
+}
+
+Output
+======
+
+Student [id=10, name=ritika, address=Address [houseNo=1234, city=Jaipur, state=Rajasthan]]
+
+
+**********************************************************Maven Program using @Component annotation in AppConfig class*******************************************************
+
+Student.java
+============
+
+package SpringCoreProgram.com.springcore;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component("student")
+public class Student {
+	
+	private int id;
+	private String name;
+	
+	//@Autowired
+	Address address;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	@Autowired
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	//default constructor
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	//@Autowired
+	//param constructor
+	public Student(int id, String name, Address address) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.address = address;
+	}
+
+	
+	//toString() method
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", address=" + address + "]";
+	}
+	
+	
+	
+	
+}
+
+
+Address.java
+============
+
+package SpringCoreProgram.com.springcore;
+
+import org.springframework.stereotype.Component;
+
+@Component("address")
+public class Address {
+
+	private int houseNo;
+	private String city;
+	private String state;
+	
+	//getters and setters
+	public int getHouseNo() {
+		return houseNo;
+	}
+	public void setHouseNo(int houseNo) {
+		this.houseNo = houseNo;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	
+	//default constructor
+	public Address() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	//param constructor
+	public Address(int houseNo, String city, String state) {
+		super();
+		this.houseNo = houseNo;
+		this.city = city;
+		this.state = state;
+	}
+	
+	//toString() method
+	@Override
+	public String toString() {
+		return "Address [houseNo=" + houseNo + ", city=" + city + ", state=" + state + "]";
+	}
+	
+	
+}
+
+
+Test.java
+=========
+
+package SpringCoreProgram.com.springcore;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Test {
+
+	public static void main(String[] args) {
+		
+		ApplicationContext factory = new AnnotationConfigApplicationContext(AppConfig.class);
+		
+		Student std = (Student) factory.getBean("student");
+		System.out.println(std);
+	}
+}
+
+AppConfig.java
+===============
+
+package SpringCoreProgram.com.springcore;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ComponentScan("SpringCoreProgram.com.springcore")
+public class AppConfig {
+
+}
+
+
+Output
+======
+
+Student [id=0, name=null, address=Address [houseNo=0, city=null, state=null]]
+
+
+
+*****************************************************Maven Program using @Component annotation in Main class(Test.java)****************************************************
+
+Student.java
+============
+
+package SpringCoreProgram.com.springcore;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component("student")
+public class Student {
+	
+	private int id;
+	private String name;
+	
+	//@Autowired
+	Address address;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	@Autowired
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	//default constructor
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	//@Autowired
+	//param constructor
+	public Student(int id, String name, Address address) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.address = address;
+	}
+
+	
+	//toString() method
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", address=" + address + "]";
+	}
+	
+	
+	
+	
+}
+
+
+Address.java
+============
+
+package SpringCoreProgram.com.springcore;
+
+import org.springframework.stereotype.Component;
+
+@Component("address")
+public class Address {
+
+	private int houseNo;
+	private String city;
+	private String state;
+	
+	//getters and setters
+	public int getHouseNo() {
+		return houseNo;
+	}
+	public void setHouseNo(int houseNo) {
+		this.houseNo = houseNo;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	
+	//default constructor
+	public Address() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	//param constructor
+	public Address(int houseNo, String city, String state) {
+		super();
+		this.houseNo = houseNo;
+		this.city = city;
+		this.state = state;
+	}
+	
+	//toString() method
+	@Override
+	public String toString() {
+		return "Address [houseNo=" + houseNo + ", city=" + city + ", state=" + state + "]";
+	}
+	
+	
+}
+
+Test.java
+==========
+
+package SpringCoreProgram.com.springcore;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+@Configuration
+@ComponentScan("SpringCoreProgram.com.springcore")
+public class Test {
+
+	public static void main(String[] args) {
+		
+		ApplicationContext factory = new AnnotationConfigApplicationContext(Test.class);
+		
+		Student std = (Student) factory.getBean("student");
+		std.setId(10);
+		std.setName("ritika");
+		
+		Address add=(Address) factory.getBean("address");
+		add.setHouseNo(1234);
+		add.setCity("Jaipur");
+		add.setState("Rajasthan");
+		
+		std.setAddress(add);
+		System.out.println(std);
+	}
+}
+
+Output
+==========
+
+Student [id=10, name=ritika, address=Address [houseNo=1234, city=Jaipur, state=Rajasthan]]
+
+
+
+************************************************************* beanscope (singletone--->default) program********************************************************************
+
+Student.java
+=============
+
+package SpringCoreProgram.com.springcore;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component("student")
+@Scope
+public class Student {
+	
+	private int id;
+	private String name;
+	
+	//@Autowired
+	Address address;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	@Autowired
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	//default constructor
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	//@Autowired
+	//param constructor
+	public Student(int id, String name, Address address) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.address = address;
+	}
+	
+}
+
+
+Test.java
+=========
+
+package SpringCoreProgram.com.springcore;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+@Configuration
+@ComponentScan("SpringCoreProgram.com.springcore")
+public class Test {
+
+	public static void main(String[] args) {
+				
+		ApplicationContext factory = new AnnotationConfigApplicationContext(Test.class);
+		
+		Student std = (Student) factory.getBean("student");
+	  System.out.println(std);
+		
+	  Student std1 = (Student) factory.getBean("student");
+	  System.out.println(std1);
+	    
+	}
+}
+
+Output
+=======
+
+SpringCoreProgram.com.springcore.Student@6221a451
+SpringCoreProgram.com.springcore.Student@6221a451
+
+
+****************************************************************** beanscope prototype program*************************************************************************
+
+Student.java
+=============
+
+package SpringCoreProgram.com.springcore;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component("student")
+@Scope("prototype")
+public class Student {
+	
+	private int id;
+	private String name;
+	
+	//@Autowired
+	Address address;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	@Autowired
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	//default constructor
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	//@Autowired
+	//param constructor
+	public Student(int id, String name, Address address) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.address = address;
+	}
+	
+}
+
+
+Test.java
+=========
+
+package SpringCoreProgram.com.springcore;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+@Configuration
+@ComponentScan("SpringCoreProgram.com.springcore")
+public class Test {
+
+	public static void main(String[] args) {
+				
+		ApplicationContext factory = new AnnotationConfigApplicationContext(Test.class);
+		
+		Student std = (Student) factory.getBean("student");
+	  System.out.println(std);
+		
+	  Student std1 = (Student) factory.getBean("student");
+	  System.out.println(std1);
+	    
+	}
+}
+
+Output
+=======
+
+SpringCoreProgram.com.springcore.Student@6221a451
+SpringCoreProgram.com.springcore.Student@52719fb6
