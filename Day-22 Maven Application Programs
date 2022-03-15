@@ -132,6 +132,43 @@ public class Test {
 	}
 }
 
+
+AppConfig.java
+===============
+
+package SpringCoreProgram.com.springcore;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class AppConfig {
+
+	@Bean("student")
+	public Student getStudent()
+	{
+		Student std = new Student();
+		std.setId(10);
+		std.setName("ritika");
+		
+		return std;
+	}
+	
+	@Bean("address")
+	public Address getAddress()
+	{
+		Address add = new Address();
+		
+		add.setHouseNo(1234);
+		add.setCity("Jaipur");
+		add.setState("Rajasthan");
+		
+		return add;
+				
+	}
+}
+
+
 Output
 ======
 
