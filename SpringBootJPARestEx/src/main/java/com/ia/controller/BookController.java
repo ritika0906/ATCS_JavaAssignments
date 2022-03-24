@@ -54,7 +54,7 @@ public class BookController {
 	}
 	
 	
-	@DeleteMapping("/deleteBook/{bookId}")  //http://localhost:7256/book/deleteBook/bid-->method url
+	@DeleteMapping("/deleteBook/{bookId}")  //http://localhost:7256/book/deleteBook/bookId-->method url
 	public String deleteBook(@PathVariable("bookId") int bookId)
 	{		
 		return service.deleteBook(bookId);
